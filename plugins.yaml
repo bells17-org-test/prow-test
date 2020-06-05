@@ -28,12 +28,12 @@ plugins:
   - wip  # Auto-hold PRs with WIP in title
   - trigger
   - owners-label
+  - config-updater
 
 config_updater:
   maps:
     label_sync/labels.yaml:
       name: label-config
-      namespace: test-pods
     config.yaml:
       name: config
     plugins.yaml:

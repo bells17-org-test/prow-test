@@ -16,3 +16,11 @@ presubmits:
       containers:
       - image: alpine
         command: ["/bin/printenv"]
+  - name: job-config-presubmit2
+    always_run: true
+    decorate: true
+    skip_report: false
+    spec:
+      containers:
+      - image: alpine
+        command: ["/bin/printenv"]
