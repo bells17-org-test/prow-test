@@ -26,3 +26,5 @@ plugins:
   - size  # Auto-label size of PR
   - verify-owners # Validates OWNERS file changes in PRs.
   - wip  # Auto-hold PRs with WIP in title
+  - trigger
+  - owners-label

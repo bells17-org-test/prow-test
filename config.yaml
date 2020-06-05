@@ -10,33 +10,18 @@ plank:
         bucket: voyager-utils
         path_strategy: explicit
       gcs_credentials_secret: gcs-credentials # the secret we just made
+  job_url_prefix_config:
+    '*': https://prow.h.k8s.bdg.egg.jp/view/gcs/
 
-periodics:
-- interval: 10m
-  name: echo-test
-  decorate: true
-  spec:
-    containers:
-    - image: alpine
-      command: ["/bin/date"]
-postsubmits:
-  bells17-org-test/prow-test:
-  - name: test-postsubmit
-    decorate: true
-    spec:
-      containers:
-      - image: alpine
-        command: ["/bin/printenv"]
-presubmits:
-  bells17-org-test/prow-test:
-  - name: test-presubmit
-    decorate: true
-    always_run: true
-    skip_report: true
-    spec:
-      containers:
-      - image: alpine
-        command: ["/bin/printenv"]
+sinker:
+  resync_period: 1m
+  max_prowjob_age: 48h
+  max_pod_age: 48h
+  terminated_pod_ttl: 30m
+
+prowjob_namespace: default
+pod_namespace: test-pods
+log_level: debug
 
 tide:
   sync_period: 2m
@@ -54,3 +39,76 @@ tide:
     - do-not-merge/work-in-progress
     - needs-rebase
 
+branch-protection:
+  orgs:
+    bells17-org-test:
+      repos:
+        prow-test:
+          protect: true
+          required_status_checks:
+            contexts:
+            - test-presubmit
+            - ls
+          exclude:
+            - "^revert-" # don't protect revert branches
+
+github_reporter:
+  job_types_to_report:
+  - presubmit
+  - postsubmit
+
+deck:
+  spyglass:
+    size_limit: 500000000  # 500 MB
+    gcs_browser_prefix: https://gcsweb.k8s.io/gcs/
+    # testgrid_config: gs://k8s-testgrid/config
+    # testgrid_root: https://testgrid.k8s.io/
+    announcement: "The old job viewer has been deprecated."
+    lenses:
+    # - lens:
+    #     name: metadata
+    #   required_files:
+    #   - started.json
+    #   optional_files:
+    #   - finished.json
+    - lens:
+        name: buildlog
+      required_files:
+        - build-log.txt
+    # - lens:
+    #     name: junit
+    #   required_files:
+    #   - artifacts/*.txt
+
+# --- job ---
+
+postsubmits:
+  bells17-org-test/prow-test:
+  - name: test-postsubmit
+    decorate: true
+    spec:
+      containers:
+      - image: alpine
+        command: ["/bin/printenv"]
+presubmits:
+  bells17-org-test/prow-test:
+  - name: test-presubmit
+    always_run: true
+    decorate: true
+    skip_report: false
+    spec:
+      containers:
+      - image: alpine
+        command: ["echo"]
+        args:
+          - "success"
+          - ">"
+          - "results.txt"
+  - name: ls
+    always_run: true
+    decorate: true
+    skip_report: false
+    spec:
+      containers:
+      - image: alpine
+        command: ["$(GOPATH)/$(REPO_OWNER)/$(REPO_NAME)/test/ls.sh"]

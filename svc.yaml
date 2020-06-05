@@ -1,0 +1,17 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: deck-lb
+  annotations:
+    virtualrouter.idcfcloud.com/firewall: "http:0.0.0.0/0:tcp:80|https:0.0.0.0/0:tcp:443|tcp:0.0.0.0/0:tcp:1-9|udp:0.0.0.0/0:udp:1-65535|icmp:0.0.0.0/0:icmp:-1/-1"
+spec:
+  selector:
+    app: deck
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+
