@@ -1,0 +1,26 @@
+postsubmits:
+  bells17-org-test/prow-test:
+  - name: job-config-postsubmit-2
+    decorate: true
+    spec:
+      containers:
+      - image: alpine
+        command: ["/bin/printenv"]
+presubmits:
+  bells17-org-test/prow-test:
+  - name: job-config-presubmit-2
+    always_run: true
+    decorate: true
+    skip_report: false
+    spec:
+      containers:
+      - image: alpine
+        command: ["/bin/printenv"]
+  - name: job-config-presubmit2-2
+    always_run: true
+    decorate: true
+    skip_report: false
+    spec:
+      containers:
+      - image: alpine
+        command: ["/bin/printenv"]
