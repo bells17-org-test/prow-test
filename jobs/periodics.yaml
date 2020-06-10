@@ -39,4 +39,3 @@ periodics:
     - name: oauth
       secret:
         secretName: oauth-token
-
