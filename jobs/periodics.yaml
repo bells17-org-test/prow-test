@@ -13,8 +13,8 @@ periodics:
       command:
       - /app/prow/cmd/branchprotector/app.binary
       args:
-      - --config-path=config/prow/config.yaml
-      - --job-config-path=config/jobs
+      - --config-path=/config/prow/config.yaml
+      - --job-config-path=/config/jobs
       - --github-token-path=/etc/github/oauth
       - --confirm
       - --github-endpoint=http://ghproxy.default.svc.cluster.local
@@ -23,19 +23,19 @@ periodics:
       - name: config
         mountPath: /etc/config
         readOnly: true
-      - name: job-config
-        mountPath: /etc/job-config
-        readOnly: true
-      - name: oauth
-        mountPath: /etc/github
-        readOnly: true
+      # - name: job-config
+      #   mountPath: /etc/job-config
+      #   readOnly: true
+      # - name: oauth
+      #   mountPath: /etc/github
+      #   readOnly: true
     volumes:
-    - name: config
-      configMap:
-        name: config
-    - name: job-config
-      configMap:
-        name: job-config
+    # - name: config
+    #   configMap:
+    #     name: config
+    # - name: job-config
+    #   configMap:
+    #     name: job-config
     - name: oauth
       secret:
         secretName: oauth-token

@@ -52,3 +52,4 @@ config_updater:
       name: job-config
       namespace: test-pod
       gzip: true
+
