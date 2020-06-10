@@ -34,6 +34,7 @@ config_updater:
   maps:
     label_sync/labels.yaml:
       name: label-config
+      namespace: test-pod
     config.yaml:
       name: config
     plugins.yaml:
@@ -41,6 +42,13 @@ config_updater:
     jobs/**/*.yaml:
       name: job-config
       gzip: true
-    experiment/test-configmap.txt:
-      name: test-configmap
+    config.yaml:
+      name: config
+      namespace: test-pod
+    plugins.yaml:
+      name: plugins
+      namespace: test-pod
+    jobs/**/*.yaml:
+      name: job-config
+      namespace: test-pod
       gzip: true
