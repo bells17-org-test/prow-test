@@ -1,5 +1,5 @@
-postsubmits:
-  - cron: "* * * * *"  # Every hour at 54 minutes past the hour
+periodics:
+- cron: "* * * * *"  # Every hour at 54 minutes past the hour
   name: ci-test-infra-branchprotector
   labels:
     app: branchprotector
