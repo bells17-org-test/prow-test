@@ -42,14 +42,14 @@ config_updater:
     jobs/**/*.yaml:
       name: job-config
       gzip: true
-    config.yaml:
-      name: config
-      namespace: test-pod
-    plugins.yaml:
-      name: plugins
-      namespace: test-pod
-    jobs/**/*.yaml:
-      name: job-config
-      namespace: test-pod
-      gzip: true
+    # config.yaml:
+    #   name: config
+    #   namespace: test-pod
+    # plugins.yaml:
+    #   name: plugins
+    #   namespace: test-pod
+    # jobs/**/*.yaml:
+    #   name: job-config
+    #   namespace: test-pod
+    #   gzip: true
 

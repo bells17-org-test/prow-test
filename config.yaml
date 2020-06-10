@@ -112,4 +112,3 @@ presubmits:
       containers:
       - image: alpine
         command: ["$(GOPATH)/$(REPO_OWNER)/$(REPO_NAME)/test/ls.sh"]
-
